@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gtja.app.operation.service.mapper.ResourceMapper">
+
+    <resultMap id="resourceDO" type="ResourceDO">
+        <id property="id" column="id"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+
+        <result property="name" column="name"/>
+        <result property="description" column="description"/>
+        <result property="url" column="url"/>
+        <result property="parentId" column="parent_id"/>
+    </resultMap>
+    <select id="getResourceById" resultMap="resourceDO">
+        SELECT * FROM resources where id = #{id}
+    </select>
+    <select id="getResources" resultMap="resourceDO">
+        SELECT * FROM resources LIMIT #{start},#{size}
+    </select>
+    <select id="getResourceCount" resultType="long">
+        SELECT count(*) FROM resources;
+    </select>
+    <insert id="addResource" parameterType="ResourceDO">
+        INSERT INTO resources(name,description,parent_id,url,gmt_create)
+        VALUE (#{name},#{description},#{parentId},#{url},now());
+    </insert>
+    <delete id="deleteResource">
+        DELETE FROM resources where id = #{id}
+    </delete>
+    <update id="updateResource" parameterType="ResourceDO">
+        UPDATE resources
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="url != null">url = #{url},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+    <select id="getResourceByRoleId" resultMap="resourceDO">
+        SELECT r.* FROM role_resource rs
+        INNER JOIN resources r
+        ON r.id = rs.resource_id
+        WHERE rs.role_id = #{roleId}
+    </select>
+    <select id="getAllResources" resultMap="resourceDO">
+        SELECT * FROM resources;
+    </select>
+
+    <delete id="deleteRoleResourceByRoleId">
+        DELETE FROM role_resource WHERE role_id = #{roleId}
+    </delete>
+
+    <insert id="addRoleResource" parameterType="RoleResourceDO">
+        INSERT INTO role_resource(role_id,resource_id,gmt_create)
+        VALUES
+        <foreach item="item" index="index" collection="list"
+                 open="" separator="," close="">
+            (#{item.roleId},#{item.resourceId},now())
+        </foreach>
+    </insert>
+
+    <select id="getResourcesByRoleIds" resultMap="resourceDO">
+        SELECT r.* FROM role_resource rr INNER JOIN resources r on r.id = rr.resource_id
+        WHERE rr.role_id IN
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

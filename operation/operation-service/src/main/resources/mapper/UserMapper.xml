@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gtja.app.operation.service.mapper.UserMapper">
+
+    <resultMap id="userDO" type="UserDO">
+        <id property="id" column="id"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+
+        <result property="userName" column="user_name"/>
+        <result property="password" column="password"/>
+        <result property="loginName" column="login_name"/>
+        <result property="mobile" column="mobile"/>
+        <result property="email" column="email"/>
+        <result property="gender" column="gender"/>
+    </resultMap>
+    <select id="getUserById" resultMap="userDO">
+        SELECT * FROM sys_user where id = #{id}
+    </select>
+    <select id="getUsers" resultMap="userDO">
+        SELECT * FROM sys_user LIMIT #{start},#{size}
+    </select>
+    <select id="getUserCount" resultType="long">
+        SELECT count(*) FROM sys_user;
+    </select>
+    <insert id="addUser" parameterType="UserDO">
+        INSERT INTO sys_user(user_name,password,login_name,mobile,email,gender,gmt_create)
+        VALUE (#{userName},#{password},#{loginName},#{mobile},#{email},#{gender},now());
+    </insert>
+    <delete id="deleteUser">
+        DELETE FROM sys_user where id = #{id}
+    </delete>
+    <update id="updateUser" parameterType="UserDO">
+        UPDATE sys_user
+        <set>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="loginName != null">login_name = #{loginName},</if>
+            <if test="mobile != null">mobile = #{mobile},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="gender != null">gender = #{gender},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+    <select id="getUser" resultMap="userDO">
+        SELECT * FROM sys_user WHERE login_name = #{loginName} AND password = #{password} LIMIT 1;
+    </select>
+
+</mapper>

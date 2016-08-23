@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="operationApp" ng-controller="indexController">
+<head>
+    <meta charset="utf-8"/>
+    <title>运营平台</title>
+
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- basic styles -->
+
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css"/>
+
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css"/>
+    <![endif]-->
+
+    <!-- page specific plugin styles -->
+
+    <!-- fonts -->
+
+    <link rel="stylesheet" href="assets/css/ace-fonts.css"/>
+
+    <!-- ace styles -->
+
+    <link rel="stylesheet" href="assets/css/ace.min.css"/>
+    <link rel="stylesheet" href="assets/css/ace-rtl.min.css"/>
+    <link rel="stylesheet" href="assets/css/ace-skins.min.css"/>
+
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="assets/css/ace-ie.min.css"/>
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+
+    <!-- ace settings handler -->
+
+    <script src="assets/js/ace-extra.min.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+    <!--[if lt IE 9]>
+    <script src="assets/js/html5shiv.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="js/angular/angular.js"></script>
+
+    <script src="js/angular/angular-animate.js"></script>
+    <script src="js/angular/angular-cookies.js"></script>
+    <script src="js/angular-ui/ui-bootstrap-tpls-2.0.1.js"></script>
+    <script src="js/angular/angular-route.js"></script>
+    <script src="js/grid/ag-grid.js"></script>
+
+
+    <script src="app.modules.js"></script>
+    <script src="services/CommonService.js"></script>
+    <script src="services/LoginService.js"></script>
+    <script src="services/SortService.js"></script>
+    <script src="services/ResourceService.js"></script>
+    <script src="services/RoleService.js"></script>
+    <script src="services/UserService.js"></script>
+    <script src="modules/system/resource/ResourceController.js"></script>
+    <script src="modules/system/role/RoleController.js"></script>
+    <script src="modules/system/user/UserController.js"></script>
+    <script src="IndexController.js"></script>
+    <script src="LoginController.js"></script>
+
+</head>
+
+<body>
+<div class="navbar navbar-default" id="navbar">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('navbar', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <div class="navbar-container" id="navbar-container">
+        <div class="navbar-header pull-left">
+            <a href="#" class="navbar-brand">
+                <small>
+                    <i class="icon-leaf"></i>
+                    平台
+                </small>
+            </a><!-- /.brand -->
+        </div><!-- /.navbar-header -->
+        <div class="navbar-header pull-right white">
+            <a href="#" class="white" ng-click="logout()">退出</a>
+        </div>
+    </div><!-- /.container -->
+</div>
+
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <div class="main-container-inner">
+        <a class="menu-toggler" id="menu-toggler" href="#">
+            <span class="menu-text"></span>
+        </a>
+
+        <div class="sidebar" id="sidebar">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('sidebar', 'fixed')
+                } catch (e) {
+                }
+            </script>
+
+            <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+                <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                    <button class="btn btn-success">
+                        <i class="icon-signal"></i>
+                    </button>
+
+                    <button class="btn btn-info">
+                        <i class="icon-pencil"></i>
+                    </button>
+
+                    <button class="btn btn-warning">
+                        <i class="icon-group"></i>
+                    </button>
+
+                    <button class="btn btn-danger">
+                        <i class="icon-cogs"></i>
+                    </button>
+                </div>
+
+                <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                    <span class="btn btn-success"></span>
+
+                    <span class="btn btn-info"></span>
+
+                    <span class="btn btn-warning"></span>
+
+                    <span class="btn btn-danger"></span>
+                </div>
+            </div><!-- #sidebar-shortcuts -->
+
+            <ul class="nav nav-list">
+                <li ng-repeat="data in auth">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="icon-desktop"></i>
+                        <span class="menu-text"> {{data.name}} </span>
+
+                        <b class="arrow icon-angle-down"></b>
+                    </a>
+
+                    <ul class="submenu">
+                        <li ng-repeat="subData in data.subResources">
+                            <a href="{{subData.url}}" ng-click="changeBreadCrumbs(data.name,subData.name)">
+                                <i class="icon-double-angle-right"></i>
+                                {{subData.name}}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul><!-- /.nav-list -->
+
+            <div class="sidebar-collapse" id="sidebar-collapse">
+                <i class="icon-double-angle-left" data-icon1="icon-double-angle-left"
+                   data-icon2="icon-double-angle-right"></i>
+            </div>
+
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('sidebar', 'collapsed')
+                } catch (e) {
+                }
+            </script>
+        </div>
+
+        <div class="main-content">
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                    try {
+                        ace.settings.check('breadcrumbs', 'fixed')
+                    } catch (e) {
+                    }
+                </script>
+
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="icon-home home-icon"></i>
+                        <a href="#">{{primaryName}}</a>
+                    </li>
+
+                    <li class="active">{{secondaryName}}</li>
+                </ul><!-- .breadcrumb -->
+            </div>
+
+            <div class="page-content">
+                <div id="content" ng-view></div>
+            </div><!-- /.page-content -->
+        </div><!-- /.main-content -->
+
+
+    </div><!-- /.main-container-inner -->
+</div><!-- /.main-container -->
+
+<!-- basic scripts -->
+
+<!--[if !IE]> -->
+
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+</script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>" + "<" + "/script>");
+</script>
+<![endif]-->
+
+<script type="text/javascript">
+    if ("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+</script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/typeahead-bs2.min.js"></script>
+
+<!-- page specific plugin scripts -->
+
+<!-- ace scripts -->
+
+<script src="assets/js/ace-elements.min.js"></script>
+<script src="assets/js/ace.min.js"></script>
+
+<!-- inline scripts related to this page -->
+</body>
+</html>

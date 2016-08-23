@@ -1,0 +1,77 @@
+<div class="page-content">
+    <div class="page-header">
+        <h1>新增资源</h1>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1">资源名称</label>
+
+                    <div class="col-sm-9">
+                        <input type="text" name="name" id="form-field-1" placeholder="名称" class="col-xs-10 col-sm-5"
+                               ng-model="item.name"/>
+                    </div>
+                </div>
+
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 资源描述 </label>
+
+                    <div class="col-sm-9">
+                        <input type="text" name="description" id="form-field-2" placeholder="描述"
+                               class="col-xs-10 col-sm-5" ng-model="item.description"/>
+                    </div>
+                </div>
+
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 父资源ID </label>
+
+                    <div class="col-sm-9">
+                        <input type="text" name="parentId" id="form-field-3" placeholder="父ID"
+                               class="col-xs-10 col-sm-5" ng-model="item.parentId"/>
+                    </div>
+                </div>
+
+                <div class="space-4"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-2"> url </label>
+
+                    <div class="col-sm-9">
+                        <input type="text" name="url" id="form-field-4" placeholder="url"
+                               class="col-xs-10 col-sm-5" ng-model="item.url"/>
+                    </div>
+                </div>
+
+                <div class="space-4"></div>
+
+
+                <div class="space-4"></div>
+                <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button class="btn btn-info" type="button" ng-click="save()">
+                            <i class="icon-ok bigger-110"></i>
+                            提交
+                        </button>
+
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn" type="reset">
+                            <i class="icon-undo bigger-110"></i>
+                            重置
+                        </button>
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn" type="reset">
+                            <i class="icon-undo bigger-110"></i>
+                            返回
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
