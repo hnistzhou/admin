@@ -1,5 +1,8 @@
-app.controller('indexController', ['$scope', '$uibModal', '$location', '$cookieStore', '$window', 'userService',
-    function ($scope, $uibModal, $location, $cookieStore, $window, userService) {
+app.controller('indexController', ['$scope', '$rootScope', '$uibModal', '$location', '$cookieStore', '$window', 'userService',
+    function ($scope, $rootScope, $uibModal, $location, $cookieStore, $window, userService) {
+        $rootScope.back = function () {
+            window.history.back();
+        };
         var token = $cookieStore.get("token");
         userService.getAuthByToken(token).then(function (result) {
             $scope.auth = result.data.data;

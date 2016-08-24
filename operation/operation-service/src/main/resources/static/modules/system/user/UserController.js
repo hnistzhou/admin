@@ -74,9 +74,6 @@ app.controller('userEditController', ['$scope', '$routeParams', '$location', 'us
                 }
             );
         };
-        $scope.back = function () {
-            window.history.back();
-        }
 
     }]);
 app.controller('userAddController', ['$scope', '$location', '$routeParams', 'userService',
@@ -112,9 +109,6 @@ app.controller('userRoleController', ['$scope', '$location', '$routeParams', 'ro
         });
         $scope.checkAll = commonService.checkAll($scope);
         $scope.move = commonService.move($scope);
-        $scope.back = function () {
-            window.history.back();
-        };
         $scope.update = function () {
             var rightData = $scope.rightData;
             var userId = $routeParams.userId;

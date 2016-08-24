@@ -74,10 +74,6 @@ app.controller('roleEditController', ['$scope', '$routeParams', '$location', 'ro
                 }
             );
         };
-        $scope.back = function () {
-            window.history.back();
-        }
-
     }]);
 app.controller('roleAddController', ['$scope', '$location', '$routeParams', 'roleService',
     function ($scope, $location, $routeParams, roleService) {
@@ -113,9 +109,7 @@ app.controller('roleResourceController', ['$scope', '$routeParams', '$location',
         $scope.checkAll = commonService.checkAll($scope);
         $scope.move = commonService.move($scope);
 
-        $scope.back = function () {
-            window.history.back();
-        };
+
 
         $scope.update = function () {
             var roleId = $routeParams.roleId;

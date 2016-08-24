@@ -77,9 +77,6 @@ app.controller('resourceEditController', ['$scope', '$routeParams', '$location',
                 }
             );
         };
-        $scope.back = function () {
-            window.history.back();
-        }
 
     }]);
 app.controller('resourceAddController', ['$scope', '$location', '$routeParams', 'resourceService',
