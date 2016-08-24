@@ -49,13 +49,24 @@
 
                 $scope.submit = submit;
                 function submit() {
-                    login($scope.user).then(function (answer) {
-                        var token = answer.data.data;
-                        $cookieStore.put("token", token);
-                        $window.location.href = "/";
-                    }, function (error) {
-                        $scope.errorMsg = error;
-                    });
+                    var password = $scope.user.password;
+                    var loginName = $scope.user.loginName;
+                    if (password && loginName) {
+                        login($scope.user).then(function (answer) {
+                            var code = answer.data.code;
+                            if (code == 0) {
+                                var token = answer.data.data;
+                                $cookieStore.put("token", token);
+                                $window.location.href = "/";
+                            } else {
+                                $scope.errorMsg = answer.data.msg;
+                            }
+                        }, function (error) {
+                            $scope.errorMsg = error;
+                        });
+                    } else {
+                        $scope.errorMsg = '请输入用户名和密码';
+                    }
                 }
 
                 function login(user) {
@@ -96,6 +107,7 @@
                                 <label class="block clearfix">
                                     <span class="block input-icon input-icon-right">
                                         <input type="text" class="form-control" placeholder="登录名"
+                                               ng-keypress="($event.which === 13)?submit():0"
                                                ng-model="user.loginName"/>
                                         <i class="icon-user"></i>
                                     </span>
@@ -103,6 +115,7 @@
                                 <label class="block clearfix">
                                     <span class="block input-icon input-icon-right">
                                         <input type="password" class="form-control" placeholder="密码"
+                                               ng-keypress="($event.which === 13)?submit():0"
                                                ng-model="user.password"/>
                                         <i class="icon-lock"></i>
                                     </span>
